@@ -1,0 +1,36 @@
+# Utilisation de l'image PHP officielle
+FROM php:8.1-fpm
+
+# Installation des dépendances nécessaires pour les extensions PHP
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    libzip-dev \
+    libicu-dev \
+    libxml2-dev \
+    libssl-dev \
+    git \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installation des extensions PHP
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd \
+    && docker-php-ext-install pdo pdo_mysql zip intl xml opcache bcmath mysqli
+
+# Installation de Xdebug (facultatif pour le debug)
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# Installation de Composer (gestionnaire de dépendances PHP)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Exposition du port 9000 pour PHP-FPM
+EXPOSE 9000
+
+# Définir le répertoire de travail
+WORKDIR /var/www/html
+
+# Commande par défaut à exécuter lorsque le conteneur démarre
+CMD ["php-fpm"]
