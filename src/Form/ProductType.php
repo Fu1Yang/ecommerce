@@ -19,18 +19,20 @@ class ProductType extends AbstractType
     {
         $builder
             ->add('name', TextType::class,[
-                "attr"=>["placeholder" => "Nom du produit"]
+                "attr"=>["placeholder" => "Nom du produit", "class"=>"w-full"]
             ])
             ->add('description', TextareaType::class,[
-                "attr"=>["placeholder" => "Description du produit"]
+                "attr"=>["placeholder" => "Description du produit", "class"=>"w-full"]
             ])
             ->add('price', NumberType::class,[
-                "attr"=>["placeholder" => "Prix du produit"]
+                "attr"=>["placeholder" => "Prix du produit", "class"=>"w-full"]
             ])
             ->add('stock', NumberType::class,[
-                "attr"=>["placeholder" => "Stock du produit"]
+                "attr"=>["placeholder" => "Stock du produit", "class"=>"w-full"]
             ])
-            ->add('isValid', CheckboxType::class)
+            ->add('isValid', CheckboxType::class,[
+                "label"=>"est valide"
+            ])
             ->add('category', EntityType::class, [
                 'class' => categories::class,
                 'choice_label' => 'nom',
