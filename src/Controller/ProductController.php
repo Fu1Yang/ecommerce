@@ -11,8 +11,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class ProductController extends AbstractController
 {
-    #[Route('/product', name: 'app_product')]
-    public function index(Request $request, EntityManagerInterface $entity): Response
+    #[Route('/product/add', name: 'app_productadd')]
+    public function ajout(Request $request, EntityManagerInterface $entity): Response
     {
         $product = new Products();
         $form = $this->createForm(ProductType::class, $product);
@@ -21,10 +21,26 @@ final class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entity->persist($product);
             $entity->flush();
+            $this->addFlash(
+               'message',
+               'Produit ajouté avec succés'
+            );
+            return $this->redirectToRoute('app_product');
         }
 
-        return $this->render('product/index.html.twig', [
+        return $this->render('product/add.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/product', name: 'app_product')]
+    public function index(Request $request, EntityManagerInterface $entity): Response
+    {
+        $product = $entity->getRepository(Products::class)->findAll();
+
+
+        return $this->render('product/index.html.twig', [
+          'products'=>$product,
         ]);
     }
 }

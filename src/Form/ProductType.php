@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType; // ✅ Correct
 
 class ProductType extends AbstractType
 {
@@ -32,6 +33,9 @@ class ProductType extends AbstractType
             ])
             ->add('isValid', CheckboxType::class,[
                 "label"=>"est valide"
+            ])
+            ->add('envoyer', SubmitType::class,[
+                "attr"=>["class"=>"dark:bg-gray-800"]
             ])
             ->add('category', EntityType::class, [
                 'class' => categories::class,
