@@ -3,6 +3,8 @@
 namespace App\Controller;
 use App\Entity\Products;
 use App\Form\ProductType;
+use App\Form\CategoriesType;
+use App\Entity\Categories;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,9 +29,22 @@ final class ProductController extends AbstractController
             );
             return $this->redirectToRoute('app_product');
         }
+        /**
+         *Formulaire pour categories
+        */
+        $category = new Categories();
+        $formCategorie = $this->createForm(CategoriesType::class,$category);
+        $formCategorie->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $entity->persist($category);
+            $entity->flush();
+        }
 
         return $this->render('product/add.html.twig', [
             'form' => $form->createView(),
+            'formCategorie' => $formCategorie,
         ]);
     }
 
@@ -43,4 +58,6 @@ final class ProductController extends AbstractController
           'products'=>$product,
         ]);
     }
+
+
 }
