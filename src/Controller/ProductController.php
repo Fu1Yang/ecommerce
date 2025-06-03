@@ -27,7 +27,7 @@ final class ProductController extends AbstractController
                'message',
                'Produit ajouté avec succés'
             );
-            return $this->redirectToRoute('app_product');
+            return $this->redirectToRoute('app_productadd');
         }
         /**
          *Formulaire pour categories
@@ -36,10 +36,15 @@ final class ProductController extends AbstractController
         $formCategorie = $this->createForm(CategoriesType::class,$category);
         $formCategorie->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) 
+        if ($formCategorie->isSubmitted() && $formCategorie->isValid()) 
         {
             $entity->persist($category);
             $entity->flush();
+               $this->addFlash(
+               'message',
+               'Catégorie ajouté avec succés'
+            );
+            return $this->redirectToRoute('app_productadd');
         }
 
         return $this->render('product/add.html.twig', [

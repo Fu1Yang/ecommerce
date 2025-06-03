@@ -14,7 +14,7 @@ class CategoriesType extends AbstractType
     {
         $builder
             ->add('nom', TextType::class,[
-                "attr"=>["placeholder" => "Nom ", "class"=>"w-full"]
+                "attr"=>["placeholder" => "Nom de la categorie", "class"=>"w-full"]
             ])
             ->add('envoyer', SubmitType::class)
         ;
