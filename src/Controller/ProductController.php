@@ -93,10 +93,32 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/product', name: 'app_product')]
-    public function index(Request $request, EntityManagerInterface $entity): Response
+     #[Route('/product/suppProduit/{id}', name: 'app_productsuppProduit')]
+    public function suppProduit($id, Request $request, EntityManagerInterface $entity): Response
     {
-        $product = $entity->getRepository(Products::class)->findAll();
+        $product = $entity->getRepository(Products::class)->find($id);
+        $entity->remove($product);
+        $entity->flush();        
+        return $this->redirectToRoute('app_productadd');
+        
+    }
+
+
+    #[Route('/product/suppCategorie/{id}', name: 'app_productsupp')]
+    public function suppCategorie($id, Request $request, EntityManagerInterface $entity): Response
+    {    
+        $categorie = $entity->getRepository(Categories::class)->find($id);
+        $entity->remove($categorie);
+        $entity->flush();
+
+        return $this->redirectToRoute('app_productadd');
+        
+    }
+
+    #[Route('/product/{id}', name: 'app_product')]
+    public function index($id, Request $request, EntityManagerInterface $entity): Response
+    {
+        $product = $entity->getRepository(Products::class)->findBy(["category"=>$id]);
 
 
         return $this->render('product/index.html.twig', [
