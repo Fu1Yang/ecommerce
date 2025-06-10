@@ -10,17 +10,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-
+use Symfony\Component\String\Slugger\AsciiSlugger;
 final class ProductController extends AbstractController
 {
     #[Route('/product/add', name: 'app_productadd')]
     public function ajout(Request $request, EntityManagerInterface $entity): Response
     {
+        $slugger = new AsciiSlugger();
         $product = new Products();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $product->setSlug($slugger->slug($form->get('name')->getData()));
             $entity->persist($product);
             $entity->flush();
             $this->addFlash(
@@ -38,6 +40,7 @@ final class ProductController extends AbstractController
 
         if ($formCategorie->isSubmitted() && $formCategorie->isValid()) 
         {
+            $category->setSlug($slugger->slug($formCategorie->get('nom')->getData()));
             $entity->persist($category);
             $entity->flush();
                $this->addFlash(
@@ -115,10 +118,12 @@ final class ProductController extends AbstractController
         
     }
 
-    #[Route('/product/{id}', name: 'app_product')]
-    public function index($id, Request $request, EntityManagerInterface $entity): Response
+    #[Route('/product/{slug}', name: 'app_product')]
+    public function index($slug, Request $request, EntityManagerInterface $entity): Response
     {
-        $product = $entity->getRepository(Products::class)->findBy(["category"=>$id]);
+        $category = $entity->getRepository(Categories::class)->findBy(['slug'=>$slug]);
+        // dd($category);
+        $product = $entity->getRepository(Products::class)->findBy(["category"=>$category]);
 
 
         return $this->render('product/index.html.twig', [
