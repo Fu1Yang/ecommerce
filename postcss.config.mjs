@@ -8,6 +8,6 @@ module.exports = {
       extend: {},
     },
     plugins: [
-      require('flowbite/plugin') // add the flowbite plugin
+      require('flowbite/plugin'), // add the flowbite plugin
     ],
   }
