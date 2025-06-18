@@ -22,11 +22,40 @@ class StripeService implements StripeServiceInterface
             'success_url'=>$this->urlGenerator->generate('app_stripe_success', ['order' => $id_order->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'cancel_url'=>$this->urlGenerator->generate('app_stripe_cancel', ['order' => $id_order->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
             'payment_method_types'=>['card'], 
-            'line_items' => [[$panier]],
+            'line_items' => [
+                [
+                   $this->getLinesItems($panier),
+                ]
+            ],
             'mode'=>'payment',
         ]);
         $mySession->set(self::STRIPE_PAYMENT_ID, $session->id);
         $mySession->set(self::STRIPE_PAYMENT_ORDER, $id_order->getid());
         return $session->url;
+    }
+
+    public function getSessionId(): mixed
+    {
+        return $this->requestStack->getSession()->get(self::STRIP_PAYEMENT_ID);
+    }
+
+    public function getSessionOrder(): mixed
+    {
+        return $this->requestStack->getSession()->get(self::STRIP_PAYEMENT_ORDER);
+    }
+
+    private function getLinesItems($panier): array
+    {
+        $product = [];
+
+        foreach($panier as $item)
+        {
+            $product['price_data']['currency'] = "euro";
+            $product['price_data']['product_data']['name'] = $item["product"]->getPrice()*100;
+            $product['quantity'] = $item['quantity'];
+            $products[] = $product;
+
+        }
+        return $product;
     }
 }
