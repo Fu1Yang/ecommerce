@@ -75,6 +75,9 @@
                             <li>
                                 <a href="{{path('app_main')}}" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" >Accueil</a>
                             </li>
+                            <li>
+                                <a href="{{path('app_panier')}}" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" >Panier</a>
+                            </li>
                             {% if is_granted('ROLE_ADMIN') %}
                                <a href="{{path('app_productadd')}}" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" >Dasbord</a>
 
