@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PanierController!{% endblock %}
+{% block title %}Panier{% endblock %}
 
 {% block body %}
 
@@ -49,11 +49,11 @@
    
                 
                 <td class="px-6 py-4">
-                    <a href="{{path('app_panier_add', {id:item.product.id})}}" class="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">+</a>                
+                    <a href="{{path('app_panier_add', {id:item.product.id})}}" style="width: 50px; background: #28d158ff; border: 2px solid #3ed230ff; margin-left: 50px; font-weight: bold; font-size: 20px;" >+</a>                
                     
-                    <a href="{{path('app_panier_supp', {id:item.product.id})}}" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">-</a>                
+                    <a href="{{path('app_panier_supp', {id:item.product.id})}}" style="width: 20px; background: #282bd1ff; border: 2px solid #382dacff; margin-left: 50px; font-weight: bold; font-size: 20px " >-</a>                
                     
-                    <a href="{{path('app_panier_remove',{id:item.product.id})}}" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Supprimer</a>                
+                    <a href="{{path('app_panier_remove',{id:item.product.id})}}"style="width: 20px; background: #ffe7e8; border: 2px solid #e66465"  >Supprimer</a>                
                 </td>
             </tr>
         {% endfor %}
@@ -65,8 +65,8 @@
                 <td></td>
                 <td>{{total}}€</td>
                 <td>
-                    <a href="{{path('app_panier_trash')}}" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Vider le panier</a>
-                    <a href="{{path('app_stripe')}}" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Valider la commande</a>
+                    <a href="{{path('app_panier_trash')}}" style="margin-left: 50px;">Vider le panier</a>
+                    <a href="{{path('app_stripe')}}" style="margin-left: 50px;" >Valider la commande</a>
                 </td>
             </tr>
         </tfoot>

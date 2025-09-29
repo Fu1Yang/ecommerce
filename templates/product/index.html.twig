@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
+{% block title %}Alimentaire{% endblock %}
 
 {% block body %}
     <section class="p-5 grid grid-cols-1 lg:grid-cols-3">
         {% for produit in products %}
             <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700" mb-5>
+           <img src="{{ asset(produit.image) }}" alt="{{ produit.name }}">
                 <a href="#">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{produit.name}} {{produit.price}}€</h5>
                 </a>

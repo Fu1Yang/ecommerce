@@ -81,7 +81,7 @@ final class PanierController extends AbstractController
     }
 
     #[Route('/panier/trash', name: 'app_panier_trash')]
-    public function trash($id, SessionInterface $session): Response
+    public function trash(SessionInterface $session): Response
     {
        $session->remove('panier');
         // dd($session);
